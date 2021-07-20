@@ -1,13 +1,14 @@
 from application import db
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, IntegerField, SelectField
+from wtforms.validators import DataRequired, Length, ValidationError
 
-class Pilots(db.Model):
+class Pilot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
-    combat_level = db.Column(db.String(10))
+    combat_level = db.Column(db.String(15))
 
-class Ships(db.Model):
+class Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String(30))
     model = db.Column(db.String(30))
@@ -21,8 +22,8 @@ class Pilot_Ship(db.Model):
     skin = db.Column(db.String(30))
 
 class AddPilotForm(FlaskForm):
-    name = StringField('Name')
-    combat_level = SelectField('Combat Level')
+    name = StringField('Name', validators=[DataRequired()])
+    combat_level = SelectField('Combat Level', choices=[('harmless', 'Harmless'), ('mostly_harmless', 'Mostly Harmless'), ('novice', 'Novice'), ('competent', 'Competent'), ('expert', 'Expert'), ('master', 'Master'), ('dangerous', 'Dangerous'), ('deadly', 'Deadly'), ('elite', 'Elite')])
     submit = SubmitField('Add Them!')
 
 class AddShipForm(FlaskForm):

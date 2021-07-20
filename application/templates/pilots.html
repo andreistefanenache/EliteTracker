@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Elite: The Dangerous - Pilots</title>
+{% endblock %}
+
+{% block content %}
+{% for pilot in pilots %}
+<p>{{ pilot.name }}<br>
+    Combat Rank: {{ pilot.combat_level }}</p>
+<h2>**************</h2>
+{% endfor %}
+{% endblock %}
