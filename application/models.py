@@ -1,10 +1,11 @@
 from application import db
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, BooleanField, IntegerField, SelectField
 
 class Pilots(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
-    combat_level = db.Column(db.Integer())
-    ship_id = db.Column(db.Integer())
+    combat_level = db.Column(db.String(10))
 
 class Ships(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,3 +19,21 @@ class Pilot_Ship(db.Model):
     pilot_id = db.Column(db.Integer())
     armament_rating = db.Column(db.Integer())
     skin = db.Column(db.String(30))
+
+class AddPilotForm(FlaskForm):
+    name = StringField('Name')
+    combat_level = SelectField('Combat Level')
+    submit = SubmitField('Add Them!')
+
+class AddShipForm(FlaskForm):
+    make = StringField('Make')
+    model = StringField('Model')
+    submit = SubmitField('Add It!')
+
+class AddPilot_ShipForm(FlaskForm):
+    ship_name = StringField('Ships Name')
+    ship_id = SelectField('Their Ship')
+    pilot_id = SelectField('The Pilot')
+    armament_rating = IntegerField('How Dangerous?')
+    skin = SelectField('Looks')
+    
