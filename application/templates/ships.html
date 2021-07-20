@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Elite: The Dangerous - Ships</title>
+{% endblock %}
+
+{% block content %}
+{% for ship in ships %}
+<p>{{ ship.make }}<br>
+    Presents: {{ ship.model }}</p>
+<h2>**************</h2>
+{% endfor %}
+{% endblock %}

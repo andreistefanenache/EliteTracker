@@ -22,3 +22,19 @@ def add_pilot():
 def pilots():
     pilots = Pilot.query.all()
     return render_template('pilots.html', pilots=pilots)
+
+@app.route('/add_ship', methods=['GET', 'POST'])
+def add_ship():
+    form = AddShipForm()
+    if form.validate_on_submit():
+        new_ship = Ship(make=form.make.data, model=form.model.data)
+        db.session.add(new_ship)
+        db.session.commit()
+        return render_template('index.html', message="Ship Added!")
+    else:
+        return render_template('add_ship.html', form=form)
+
+@app.route('/ships')
+def ships():
+    ships = Ship.query.all()
+    return render_template('ships.html', ships=ships)
