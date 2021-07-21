@@ -57,3 +57,13 @@ def update_pilot2(old):
         return redirect('/pilots')
     else:
         return redirect('/')
+
+@app.route('/delete_pilot/<name>')
+def delete_pilot(name):
+    deleted_pilot = db.session.query(Pilot).filter_by(name=name).first()
+    if deleted_pilot:
+        db.session.delete(deleted_pilot)
+        db.session.commit()
+        return redirect('/pilots')
+    else:
+        return redirect('/pilots')
