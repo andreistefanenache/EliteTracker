@@ -47,15 +47,12 @@ def update_pilot(name1):
     else:
         return redirect('/pilots')
 
-@app.route('/update_pilot2/<old>', methods=['POST'])
+@app.route('/update_pilot2/<old>', methods=['GET', 'POST'])
 def update_pilot2(old):
-    updated_pilot = Pilot(name=old)
-    print(old)
-    print(request)
-    print(request.args)
-    if request.args.get('name'):
-        updated_pilot.name = request.args.get('name')
-        updated_pilot.combat_level = request.args.get('combat_level')
+    updated_pilot = db.session.query(Pilot).filter_by(name=old).first()
+    if request.form.get('name'):
+        updated_pilot.name = request.form.get('name')
+        updated_pilot.combat_level = request.form.get('combat_level')
         db.session.commit()
         return redirect('/pilots')
     else:
