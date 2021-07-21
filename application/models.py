@@ -7,18 +7,20 @@ class Pilot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
     combat_level = db.Column(db.String(15))
+    pilot_ship = db.relationship('Pilot_ship', backref='pilot')
 
 class Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     make = db.Column(db.String(30))
     model = db.Column(db.String(30))
+    pilot_ship = db.relationship('Pilot_ship', backref='ship')
 
 class Pilot_Ship(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ship_name = db.Column(db.String(50))
-    ship_id = db.Column(db.Integer())
-    pilot_id = db.Column(db.Integer())
-    armament_rating = db.Column(db.Integer())
+    ship_id = db.Column('ship_id', db.Integer, db.ForeignKey('ship.id'))
+    pilot_id = db.Column('pilot_id', db.Integer, db.ForeignKey('pilot.id'))
+    armament_rating = db.Column(db.Integer)
     skin = db.Column(db.String(30))
 
 class AddPilotForm(FlaskForm):
