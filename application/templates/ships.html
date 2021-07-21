@@ -7,7 +7,8 @@
 {% block content %}
 {% for ship in ships %}
 <p>{{ ship.make }}<br>
-    Presents: {{ ship.model }}</p>
+    Presents: {{ ship.model }}</p><br>
+<a href="{{ url_for('update_ship', make=ship.make, model=ship.model) }}"><button>Edit</button></a>
 <h2>**************</h2>
 {% endfor %}
 {% endblock %}

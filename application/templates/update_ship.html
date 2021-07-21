@@ -1,29 +1,29 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>Elite: The Dangerous - update Pilot</title>
+<title>Elite: The Dangerous - Update Ship</title>
 {% endblock %}
 
 {% block content %}
 <div class='form'>
-    <form method='POST' action="{{ url_for('update_pilot2', old=pilot.name) }}">
+    <form method='POST' action="{{ url_for('update_ship2', make=ship.make, model=ship.model) }}">
         <!--The hidden tag here is necessary for CSRF protection (always include in forms)-->
         {{ form.hidden_tag() }}
         <!--We display the username field label and the field itself-->
-        <h2>Editing {{ pilot.name }}</h2>
-        {{ form.name.label }}
-        {{ form.name }}
+        <h2>Editing {{ ship.make }} {{ ship.model }}</h2>
+        {{ form.make.label }}
+        {{ form.make }}
         <!--Here, we want our page to catch and display any errors raised. The if statement checks if a ValidationError object exists and if so, present the message-->
-        {% if form.name.errors %}
+        {% if form.make.errors %}
         <div class='error'>
-            {% for error in form.name.errors %}
+            {% for error in form.make.errors %}
             <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% endif %}
         <br>
-        {{ form.combat_level.label }}
-        {{ form.combat_level }}
+        {{ form.model.label }}
+        {{ form.model }}
         <br>
         {{ form.submit }}
     </form>
@@ -32,6 +32,6 @@
 <br>
 <br>
 <div>
-    <a href="{{ url_for('delete_pilot', name=pilot.name) }}"><button>DELETE!</button></a>
+    <a href="{{ url_for('delete_ship', make=ship.make, model=ship.model) }}"><button>DELETE!</button></a>
 </div>
 {% endblock %}

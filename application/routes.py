@@ -58,6 +58,26 @@ def update_pilot2(old):
     else:
         return redirect('/')
 
+@app.route('/update_ship/<make>/<model>', methods=['GET', 'POST'])
+def update_ship(make, model):
+    form = AddShipForm()
+    ship = Ship(make=make, model=model)
+    if Ship:
+        return render_template('update_ship.html', ship=ship, form=form)
+    else:
+        return redirect('/ships')
+
+@app.route('/update_ship2/<make>/<model>', methods=['GET', 'POST'])
+def update_ship2(make, model):
+    updated_pilot = db.session.query(Ship).filter_by(make=make, model=model).first()
+    if request.form.get('make'):
+        updated_pilot.make = request.form.get('make')
+        updated_pilot.model = request.form.get('model')
+        db.session.commit()
+        return redirect('/ships')
+    else:
+        return redirect('/')
+
 @app.route('/delete_pilot/<name>')
 def delete_pilot(name):
     deleted_pilot = db.session.query(Pilot).filter_by(name=name).first()
@@ -67,3 +87,13 @@ def delete_pilot(name):
         return redirect('/pilots')
     else:
         return redirect('/pilots')
+
+@app.route('/delete_ship/<make>/<model>')
+def delete_ship(make, model):
+    deleted_ship = db.session.query(Ship).filter_by(make=make, model=model).first()
+    if deleted_ship:
+        db.session.delete(deleted_ship)
+        db.session.commit()
+        return redirect('/ships')
+    else:
+        return redirect('/ships')
