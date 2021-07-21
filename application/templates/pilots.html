@@ -7,7 +7,8 @@
 {% block content %}
 {% for pilot in pilots %}
 <p>{{ pilot.name }}<br>
-    Combat Rank: {{ pilot.combat_level }}</p>
+    Combat Rank: {{ pilot.combat_level }}</p><br>
+<a href="{{ url_for('update_pilot', name1=pilot.name) }}"><button>Edit</button></a>
 <h2>**************</h2>
 {% endfor %}
 {% endblock %}

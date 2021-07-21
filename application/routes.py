@@ -1,7 +1,6 @@
-from werkzeug.utils import redirect
 from application import app, db
 from application.models import Pilot, Ship, Pilot_Ship, AddPilotForm, AddShipForm, AddPilot_ShipForm
-from flask import render_template
+from flask import render_template, redirect, url_for, request
 
 @app.route('/')
 def home():
@@ -38,3 +37,26 @@ def add_ship():
 def ships():
     ships = Ship.query.all()
     return render_template('ships.html', ships=ships)
+
+@app.route('/update_pilot/<name1>', methods=['GET', 'POST'])
+def update_pilot(name1):
+    form = AddPilotForm()
+    pilot = Pilot(name=name1)
+    if pilot:
+        return render_template('update_pilot.html', pilot=pilot, form=form)
+    else:
+        return redirect('/pilots')
+
+@app.route('/update_pilot2/<old>', methods=['POST'])
+def update_pilot2(old):
+    updated_pilot = Pilot(name=old)
+    print(old)
+    print(request)
+    print(request.args)
+    if request.args.get('name'):
+        updated_pilot.name = request.args.get('name')
+        updated_pilot.combat_level = request.args.get('combat_level')
+        db.session.commit()
+        return redirect('/pilots')
+    else:
+        return redirect('/')
