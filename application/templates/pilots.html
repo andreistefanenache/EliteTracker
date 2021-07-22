@@ -6,7 +6,7 @@
 
 {% block content %}
 {% for pilot in pilots %}
-<p>{{ pilot.name }}<br>
+<p><a href="{{ url_for('ship_by_pilot', id=pilot.id) }}">{{ pilot.name }}</a><br>
     Combat Rank: {{ pilot.combat_level }}</p><br>
 <a href="{{ url_for('update_pilot', name1=pilot.name) }}"><button>Edit</button></a>
 <h2>**************</h2>

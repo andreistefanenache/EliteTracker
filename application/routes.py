@@ -1,5 +1,5 @@
 from application import app, db
-from application.models import Pilot, Ship, Pilot_Ship, AddPilotForm, AddShipForm, AddPilot_ShipForm
+from application.models import Pilot, Ship, PilotShip, AddPilotForm, AddShipForm, AddPilotShipForm
 from flask import render_template, redirect, url_for, request
 
 @app.route('/')
@@ -37,6 +37,27 @@ def add_ship():
 def ships():
     ships = Ship.query.all()
     return render_template('ships.html', ships=ships)
+
+@app.route('/add_pilot_ship', methods=['GET', 'POST'])
+def add_pilot_ship():
+    form = AddPilotShipForm()
+    ship = request.form.get('ship_id')
+    pilot = request.form.get('pilot_id')
+    if form.validate_on_submit():
+        new_pilot_ship = PilotShip(ship_name=form.ship_name.data, ship_id=ship, pilot_id=pilot, armament_rating=form.armament_rating.data, skin=form.skin.data)
+        db.session.add(new_pilot_ship)
+        db.session.commit()
+        return render_template('index.html', message="Pilots Ship Added!")
+    else:
+        return render_template('add_pilot_ship.html', form=form)
+    
+@app.route('/ship_by_pilot/<int:id>')
+def ship_by_pilot(id):
+    ships = db.session.query(PilotShip).filter_by(pilot_id=id).all()
+    context = db.session.query(Pilot).get(id)
+    print(ships)
+    name = context.name
+    return render_template('ship_by_pilot.html', ships=ships, name=name)
 
 @app.route('/update_pilot/<name1>', methods=['GET', 'POST'])
 def update_pilot(name1):

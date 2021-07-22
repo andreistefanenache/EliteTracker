@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Elite: The Dangerous - Add Pilot</title>
+{% endblock %}
+
+{% block content %}
+<div class='form'>
+    <form method='POST' action=''>
+        <!--The hidden tag here is necessary for CSRF protection (always include in forms)-->
+        {{ form.hidden_tag() }}
+        <!--We display the username field label and the field itself-->
+        {{ form.ship_name.label }}
+        {{ form.ship_name }}
+        <!--Here, we want our page to catch and display any errors raised. The if statement checks if a ValidationError object exists and if so, present the message-->
+        {% if form.ship_name.errors %}
+        <div class='error'>
+            {% for error in form.ship_name.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <br>
+        {{ form.ship_id.label }}
+        {{ form.ship_id }}
+        <br>
+        {{ form.pilot_id.label }}
+        {{ form.pilot_id }}
+        <br>
+        {{ form.armament_rating.label }}
+        {{ form.armament_rating }}
+        <br>
+        {{ form.skin.label }}
+        {{ form.skin }}
+        <br>
+        {{ form.submit }}
+    </form>
+</div>
+{% endblock %}
