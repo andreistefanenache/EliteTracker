@@ -55,7 +55,6 @@ def add_pilot_ship():
 def ship_by_pilot(id):
     ships = db.session.query(PilotShip).filter_by(pilot_id=id).all()
     context = db.session.query(Pilot).get(id)
-    print(ships)
     name = context.name
     return render_template('ship_by_pilot.html', ships=ships, name=name)
 
@@ -98,6 +97,26 @@ def update_ship2(make, model):
         return redirect('/ships')
     else:
         return redirect('/')
+
+# @app.route('/update_pilot_ship/<make>/<model>', methods=['GET', 'POST'])
+# def update_pilot_ship(make, model):
+#     form = AddShipForm()
+#     ship = Ship(make=make, model=model)
+#     if Ship:
+#         return render_template('update_pilot_ship.html', ship=ship, form=form)
+#     else:
+#         return redirect('/pilots')
+
+# @app.route('/update_pilot_ship2/<make>/<model>', methods=['GET', 'POST'])
+# def update_pilot_ship2(make, model):
+#     updated_pilot = db.session.query(Ship).filter_by(make=make, model=model).first()
+#     if request.form.get('make'):
+#         updated_pilot.make = request.form.get('make')
+#         updated_pilot.model = request.form.get('model')
+#         db.session.commit()
+#         return redirect('/pilots')
+#     else:
+#         return redirect('/')
 
 @app.route('/delete_pilot/<name>')
 def delete_pilot(name):
