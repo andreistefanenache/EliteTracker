@@ -62,41 +62,38 @@ def ship_by_pilot(id):
 def update_pilot(name1):
     form = AddPilotForm()
     pilot = Pilot(name=name1)
-    if pilot:
-        return render_template('update_pilot.html', pilot=pilot, form=form)
-    else:
-        return redirect('/pilots')
+
+    return render_template('update_pilot.html', pilot=pilot, form=form)
+
 
 @app.route('/update_pilot2/<old>', methods=['GET', 'POST'])
 def update_pilot2(old):
     updated_pilot = db.session.query(Pilot).filter_by(name=old).first()
-    if request.form.get('name'):
-        updated_pilot.name = request.form.get('name')
-        updated_pilot.combat_level = request.form.get('combat_level')
-        db.session.commit()
-        return redirect('/pilots')
-    else:
-        return redirect('/')
+    # if request.form.get('name'):
+    updated_pilot.name = request.form.get('name')
+    updated_pilot.combat_level = request.form.get('combat_level')
+    db.session.commit()
+    return redirect('/pilots')
+    # else:
+    #     return redirect('/')
 
 @app.route('/update_ship/<make>/<model>', methods=['GET', 'POST'])
 def update_ship(make, model):
     form = AddShipForm()
     ship = Ship(make=make, model=model)
-    if Ship:
-        return render_template('update_ship.html', ship=ship, form=form)
-    else:
-        return redirect('/ships')
+
+    return render_template('update_ship.html', ship=ship, form=form)
 
 @app.route('/update_ship2/<make>/<model>', methods=['GET', 'POST'])
 def update_ship2(make, model):
     updated_pilot = db.session.query(Ship).filter_by(make=make, model=model).first()
-    if request.form.get('make'):
-        updated_pilot.make = request.form.get('make')
-        updated_pilot.model = request.form.get('model')
-        db.session.commit()
-        return redirect('/ships')
-    else:
-        return redirect('/')
+    # if request.form.get('make'):
+    updated_pilot.make = request.form.get('make')
+    updated_pilot.model = request.form.get('model')
+    db.session.commit()
+    return redirect('/ships')
+    # else:
+    #     return redirect('/')
 
 # @app.route('/update_pilot_ship/<make>/<model>', methods=['GET', 'POST'])
 # def update_pilot_ship(make, model):
