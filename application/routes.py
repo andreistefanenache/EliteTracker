@@ -134,3 +134,13 @@ def delete_ship(make, model):
         return redirect('/ships')
     else:
         return redirect('/ships')
+
+@app.route('/delete_pilot_ship/<int:id>')
+def delete_pilot_ship(id):
+    deleted_ship = db.session.query(PilotShip).filter_by(id=id).first()
+    if deleted_ship:
+        db.session.delete(deleted_ship)
+        db.session.commit()
+        return render_template('index.html', message="Pilots Ship Deleted!")
+    else:
+        return redirect('/pilots')

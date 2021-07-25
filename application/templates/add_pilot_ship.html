@@ -6,6 +6,8 @@
 
 {% block content %}
 <div class='form'>
+    <h1>Add A Ship</h1>
+    <br>
     <form method='POST' action=''>
         <!--The hidden tag here is necessary for CSRF protection (always include in forms)-->
         {{ form.hidden_tag() }}

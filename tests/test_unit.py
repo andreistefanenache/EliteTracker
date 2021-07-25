@@ -35,7 +35,7 @@ class TestRead(TestBase):
     def test_home(self):
         response = self.client.get(url_for('home'))
 
-        assert "This is the Home page" in response.data.decode()
+        assert "Welcome Commander" in response.data.decode()
 
     def test_pilots(self):
         response = self.client.get(url_for('pilots'))

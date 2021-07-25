@@ -10,7 +10,8 @@
 <p>{{ ship.ship_name }}<br>
     {{ ship.armament_rating }}<br>
     {{ ship.ship.make }}: {{ ship.ship.model }}</p><br>
-<a href="#"><button>Edit</button></a>
+<a href="{{ url_for('delete_pilot_ship', id=ship.id) }}"><button type="button"
+        class="btn btn-danger">!!Delete!!</button></a>
 <h2>**************</h2>
 {% endfor %}
 {% endblock %}
